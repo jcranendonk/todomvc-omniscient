@@ -23,7 +23,7 @@ require('../css/styles.css');
 require('file?name=index.html!../index.html');
 
 // Set up immutable storage skeleton
-var todoAppData = immstruct({
+let todoAppData = immstruct({
     items: {
         // // Example data:
         // [uuid.v4()]: {

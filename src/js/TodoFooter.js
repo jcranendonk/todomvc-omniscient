@@ -1,6 +1,6 @@
 import {DOM, addons} from 'react/addons';
-var {div, footer, span, strong, ul, li, a, button} = DOM;
-var {classSet: cx} = addons;
+let {div, footer, span, strong, ul, li, a, button} = DOM;
+let {classSet: cx} = addons;
 import component from 'omniscient';
 import {show} from './constants';
 import action from './action';

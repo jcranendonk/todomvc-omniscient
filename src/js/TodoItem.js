@@ -1,6 +1,6 @@
 import {DOM, addons} from 'react/addons';
-var {div, li, input, label, button} = DOM;
-var {classSet: cx} = addons;
+let {div, li, input, label, button} = DOM;
+let {classSet: cx} = addons;
 import component from 'omniscient';
 import {key} from './constants';
 import action from './action';

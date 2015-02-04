@@ -1,5 +1,5 @@
 import {DOM} from 'react';
-var {input, section, ul} = DOM;
+let {input, section, ul} = DOM;
 import component from 'omniscient';
 import action from './action';
 import {show} from './constants';

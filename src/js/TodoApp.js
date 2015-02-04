@@ -1,5 +1,5 @@
 import {DOM} from 'react';
-var {div} = DOM;
+let {div} = DOM;
 import component from 'omniscient';
 import TodoHeader from './TodoHeader';
 import TodoList from './TodoList';

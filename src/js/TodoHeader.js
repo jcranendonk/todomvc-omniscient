@@ -1,5 +1,5 @@
 import {DOM} from 'react';
-var {header, h1, input} = DOM;
+let {header, h1, input} = DOM;
 import component from 'omniscient';
 import {key} from './constants';
 import action from './action';
