@@ -8,7 +8,7 @@ import action from './action';
 export default component(
     'TodoFooter',
     ({activeCount, completedCount, showingState}) => {
-        let showing = showingState.deref();
+        let showing = showingState.deref(show.allTodos);
         let clearButton;
         if (completedCount) {
             clearButton = button({

@@ -19,12 +19,12 @@ function byCompleted(showing) {
 
 export default component(
     'TodoList',
-    ({todos, state}) => {
+    ({todos, editState, showingState}) => {
         let allCompleted = activeTodoCount(todos) === 0;
-        let visibleTodos = todos.filter(byCompleted(state.get('showing', show.allTodos)));
+        let visibleTodos = todos.filter(byCompleted(showingState.deref(show.allTodos)));
         let todoItems = [
             for ([todoId, todo] of visibleTodos.entries())
-                TodoItem(todoId, {todo, todoId, editState: state.cursor(['editing', todoId])})
+                TodoItem(todoId, {todo, todoId, editState: editState.cursor(todoId)})
         ];
 
         if (todos.count() === 0) {

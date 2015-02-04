@@ -34,9 +34,6 @@ var todoAppData = immstruct({
         //     completed: true,
         //     title: 'make presentation'
         // }
-    },
-    state: {
-        showing: show.allTodos
     }
 });
 
