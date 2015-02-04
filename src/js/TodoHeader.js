@@ -30,7 +30,5 @@ export default component(
                 onBlur: () => editState.delete('title'),
                 onChange: e => editState.set('title', e.currentTarget.value),
                 onKeyDown: e => handleKeyDown(e, editState),
-                autoFocus: true
-            })
-        )
+                autoFocus: true}))
 );

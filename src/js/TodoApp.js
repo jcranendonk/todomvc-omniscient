@@ -16,6 +16,5 @@ export default component(
                 activeCount: activeTodoCount(todos),
                 completedCount: completedTodoCount(todos),
                 showingState: state.cursor('showing')
-            })
-        )
+            }))
 );

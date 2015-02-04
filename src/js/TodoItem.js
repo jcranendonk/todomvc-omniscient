@@ -49,8 +49,7 @@ export default component(
                 button({
                     className: 'destroy',
                     onClick: () => action.removeTodo(todoId)
-                })
-            ),
+                })),
             input({
                 className: 'edit',
                 ref: 'editField',
@@ -59,6 +58,5 @@ export default component(
                 onChange: e => editState.set('title', e.currentTarget.value),
                 onKeyDown: e => handleKeyDown(e, todoId, editState)
             })
-        )
-    }
-);
+        );
+    });

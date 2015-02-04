@@ -7,7 +7,7 @@ export function setAllCompleted(completed) {
     if (!getCursor) return;
     getCursor('items').withMutations(todos => {
         for (let id of todos.keys()) {
-            todos.setIn([id, 'completed'], completed)
+            todos.setIn([id, 'completed'], completed);
         }
     });
 }
@@ -19,7 +19,7 @@ export function setCompleted(id, completed) {
 
 export function clearCompleted() {
     if (!getCursor) return;
-    getCursor('items').update(todos => todos.filter(todo => !todo.get('completed')))
+    getCursor('items').update(todos => todos.filter(todo => !todo.get('completed')));
 }
 
 export function removeTodo(id) {

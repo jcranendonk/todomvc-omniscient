@@ -41,5 +41,4 @@ export default component(
                         className: cx({selected: showing === show.completedTodos})
                     }, 'Completed'))),
             clearButton);
-    }
-);
+    });
