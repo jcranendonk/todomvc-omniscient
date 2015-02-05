@@ -18,7 +18,7 @@ let focusOnEdit = {
 export default component(
     'TodoItem',
     focusOnEdit,
-    ({todo, todoId, editState, doStuff}) => {
+    ({todo, todoId, editState}, {doStuff}) => {
         let completed = todo.get('completed', false);
         let editing = editState.has('title');
         let title = todo.get('title');

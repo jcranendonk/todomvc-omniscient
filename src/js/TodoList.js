@@ -24,7 +24,7 @@ export default component(
         let visibleTodos = todos.filter(byCompleted(showingState.deref(show.allTodos)));
         let todoItems = [
             for ([todoId, todo] of visibleTodos.entries())
-                TodoItem(todoId, {todo, todoId, editState: editState.cursor(todoId), doStuff: () => console.log('showingState: ', showingState.deref())})
+                TodoItem(todoId, {todo, todoId, editState: editState.cursor(todoId), statics: {doStuff: () => console.log('showingState: ', showingState.deref())}})
         ];
 
         if (todos.count() === 0) {
