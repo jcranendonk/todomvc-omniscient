@@ -1,34 +1,35 @@
 import {DOM} from 'react';
 let {header, h1, input} = DOM;
 import component from 'omniscient';
-import {key} from './constants';
-import action from './action';
+import * as action from './action';
+import {handleKeyDown} from './utils';
 
-function handleKeyDown(e, editState) {
-    switch (e.keyCode) {
-        case key.enter:
-            e.preventDefault();
-            action.addTodo(editState.get('title'));
-            editState.delete('title');
-            break;
-        case key.esc:
-            e.preventDefault();
-            editState.delete('title');
-            break;
+let clearAfterEdit = {
+    componentDidUpdate(prevProps, prevState) {
+        if (!this.props.editState.has('title') && prevProps.editState.has('title')) {
+            this.refs.editBox.getDOMNode().value = '';
+        }
     }
-}
+};
 
 export default component(
     'TodoHeader',
-    ({editState}) =>
-        header({id: 'header'},
-            h1({}, 'todos'),
-            input({
-                id: 'new-todo',
-                placeholder: 'What needs to be done?',
-                value: editState.get('title'),
-                onBlur: () => editState.delete('title'),
-                onChange: e => editState.set('title', e.currentTarget.value),
-                onKeyDown: e => handleKeyDown(e, editState),
-                autoFocus: true}))
-);
+    clearAfterEdit,
+    ({editState}) => {
+        let finish = e => {
+            action.addTodo(editState.get('title'));
+            editState.delete('title');
+        };
+        let cancel = _ => editState.delete('title');
+
+        return header({id: 'header'},
+                    h1({}, 'todos'),
+                    input({
+                        id: 'new-todo',
+                        ref: 'editBox',
+                        placeholder: 'What needs to be done?',
+                        onBlur: cancel,
+                        onChange: e => editState.set('title', e.currentTarget.value),
+                        onKeyDown: handleKeyDown(finish, cancel),
+                        autoFocus: true}));
+    });

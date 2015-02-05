@@ -1,9 +1,9 @@
 // Polyfills
 require('6to5/polyfill');
+import omniscient from 'omniscient';
 
 if (process.env.NODE_ENV !== 'production') {
     // Enable debugging options
-    import omniscient from 'omniscient';
     omniscient.debug();
 }
 
@@ -38,7 +38,7 @@ let todoAppData = immstruct({
 });
 
 // Init actions
-import action from './action';
+import * as action from './action';
 action._init(todoAppData);
 
 // Main render cycle

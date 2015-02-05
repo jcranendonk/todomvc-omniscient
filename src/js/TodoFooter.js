@@ -3,7 +3,7 @@ let {div, footer, span, strong, ul, li, a, button} = DOM;
 let {classSet: cx} = addons;
 import component from 'omniscient';
 import {show} from './constants';
-import action from './action';
+import * as action from './action';
 
 export default component(
     'TodoFooter',

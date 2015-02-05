@@ -1,7 +1,7 @@
 import {DOM} from 'react';
 let {input, section, ul} = DOM;
 import component from 'omniscient';
-import action from './action';
+import * as action from './action';
 import {show} from './constants';
 import {activeTodoCount} from './utils';
 import TodoItem from './TodoItem';

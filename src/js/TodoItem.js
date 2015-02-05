@@ -2,27 +2,15 @@ import {DOM, addons} from 'react/addons';
 let {div, li, input, label, button} = DOM;
 let {classSet: cx} = addons;
 import component from 'omniscient';
-import {key} from './constants';
-import action from './action';
-
-function handleKeyDown(e, todoId, editState) {
-    switch (e.keyCode) {
-        case key.enter:
-            e.preventDefault();
-            action.updateTodo(todoId, editState.get('title'));
-            editState.delete('title');
-            break;
-        case key.esc:
-            e.preventDefault();
-            editState.delete('title');
-            break;
-    }
-}
+import * as action from './action';
+import {handleKeyDown} from './utils';
 
 let focusOnEdit = {
-    componentDidUpdate: function() {
-        if (this.props.editState.has('title')) {
-            this.refs.editField.getDOMNode().focus();
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.editState.has('title') && !prevProps.editState.has('title')) {
+            let node = this.refs.editBox.getDOMNode();
+            node.focus();
+            node.setSelectionRange(node.value.length, node.value.length);
         }
     }
 };
@@ -33,30 +21,39 @@ export default component(
     ({todo, todoId, editState}) => {
         let completed = todo.get('completed', false);
         let editing = editState.has('title');
-        return li({
-                className: cx({completed, editing})
-            },
-            div({className: 'view'},
-                input({
-                    className: 'toggle',
-                    type: 'checkbox',
-                    checked: completed,
-                    onChange: () => action.setCompleted(todoId, !completed)
-                }),
-                label({
-                    onDoubleClick: () => editState.set('title', todo.get('title'))
-                }, todo.get('title') || '[No text]'),
-                button({
-                    className: 'destroy',
-                    onClick: () => action.removeTodo(todoId)
-                })),
-            input({
-                className: 'edit',
-                ref: 'editField',
-                value: editState.get('title'),
-                onBlur: () => editState.delete('title'),
-                onChange: e => editState.set('title', e.currentTarget.value),
-                onKeyDown: e => handleKeyDown(e, todoId, editState)
-            })
-        );
+        let title = todo.get('title');
+
+        let editBox;
+        if (editing) {
+            let finish = e => {
+                action.updateTodo(todoId, editState.get('title'));
+                editState.delete('title');
+            };
+            let cancel = _ => editState.delete('title');
+            editBox = input({
+                            className: 'edit',
+                            ref: 'editBox',
+                            defaultValue: todo.get('title'),
+                            onBlur: cancel,
+                            onChange: e => editState.set('title', e.currentTarget.value),
+                            onKeyDown: handleKeyDown(finish, cancel)
+                        });
+        }
+
+        return li({className: cx({completed, editing})},
+                    div({className: 'view'},
+                        input({
+                            className: 'toggle',
+                            type: 'checkbox',
+                            checked: completed,
+                            onChange: _ => action.setCompleted(todoId, !todo.get('completed'))
+                        }),
+                        label({
+                            onDoubleClick: _ => editState.set('title', title)
+                        }, title || '[No text]'),
+                        button({
+                            className: 'destroy',
+                            onClick: _ => action.removeTodo(todoId)
+                        })),
+                    editBox);
     });
