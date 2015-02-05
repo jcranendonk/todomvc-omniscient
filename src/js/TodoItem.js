@@ -18,7 +18,7 @@ let focusOnEdit = {
 export default component(
     'TodoItem',
     focusOnEdit,
-    ({todo, todoId, editState}) => {
+    ({todo, todoId, editState, doStuff}) => {
         let completed = todo.get('completed', false);
         let editing = editState.has('title');
         let title = todo.get('title');
@@ -46,7 +46,7 @@ export default component(
                             className: 'toggle',
                             type: 'checkbox',
                             checked: completed,
-                            onChange: _ => action.setCompleted(todoId, !todo.get('completed'))
+                            onChange: _ => {action.setCompleted(todoId, !todo.get('completed')); doStuff();}
                         }),
                         label({
                             onDoubleClick: _ => editState.set('title', title)
