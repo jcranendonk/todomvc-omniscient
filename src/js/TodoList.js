@@ -17,14 +17,21 @@ function byCompleted(showing) {
     }
 }
 
+let eventHandler = {
+    doStuff() {
+        console.log('showingState: ', this.props.showingState.deref());
+    }
+};
+
 export default component(
     'TodoList',
-    ({todos, editState, showingState}) => {
+    eventHandler,
+    function ({todos, editState, showingState}) {
         let allCompleted = activeTodoCount(todos) === 0;
         let visibleTodos = todos.filter(byCompleted(showingState.deref(show.allTodos)));
         let todoItems = [
             for ([todoId, todo] of visibleTodos.entries())
-                TodoItem(todoId, {todo, todoId, editState: editState.cursor(todoId), statics: {doStuff: () => console.log('showingState: ', showingState.deref())}})
+                TodoItem(todoId, {todo, todoId, editState: editState.cursor(todoId), statics: {doStuff: this.doStuff }})
         ];
 
         if (todos.count() === 0) {
